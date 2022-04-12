@@ -10,12 +10,15 @@ public class App {
         Store eventStore = new Store();
         eventStore.insert(water);
         eventStore.insert(dog);
-        System.out.println(eventStore.currentEvent);
+        System.out.println(eventStore.currentEvent());
         eventStore.insert(music);
         eventStore.moveNext();
         eventStore.moveNext();
-        System.out.println(eventStore.currentEvent);
-        eventStore.moveNext();
+        System.out.println(eventStore.currentEvent());
+        //eventStore.moveNext();
+        eventStore.insert(new Event("mom", 13));
+        eventStore.removeAll("type");
+        eventStore.showAllEvents();
         eventStore.close();
     }
 }

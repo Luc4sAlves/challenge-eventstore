@@ -34,12 +34,18 @@ public class Store implements EventStore, EventIterator {
     }
 
     @Override
-    public Event current() {
+    public Event current() throws IllegalStateException {
+        if(this.currentEvent == null){
+            throw new IllegalStateException();
+        }
         return this.currentEvent;
     }
 
     @Override
-    public void remove() {
+    public void remove() throws IllegalStateException {
+        if(this.currentEvent == null){
+            throw new IllegalStateException();
+        }
         Event tempEvent = this.currentEvent;
         moveNext();
         this.EventCollection.remove(tempEvent);        
@@ -56,8 +62,14 @@ public class Store implements EventStore, EventIterator {
     @Override
     public void removeAll(String type) {
 
-        this.EventCollection.clear();
-        this.currentEvent = null;
+        this.EventCollection.removeIf(event -> event.type().equals(type));
+
+        //I Don't know what should happen with current event so 
+        //the safe assumption is just setting it to null
+        if(this.currentEvent.type().equals(type)){
+            this.currentEvent = null;
+        }
+        
         
     }
 
@@ -67,4 +79,15 @@ public class Store implements EventStore, EventIterator {
         return null;
     }
     
+    public void showAllEvents(){
+        for(Event event: this.EventCollection){
+            System.out.println(event.type());
+            System.out.println(event.timestamp());
+        }
+    }
+
+    public Event currentEvent(){
+        return this.currentEvent;
+    }
+
 }
