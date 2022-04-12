@@ -19,4 +19,9 @@ public class Event {
     public long timestamp() {
         return timestamp;
     }
+
+    //Added this method for easier testing
+    public boolean equalTypeTimestamp(Event event){
+        return(this.type() == event.type() && this.timestamp == event.timestamp());
+    }
 }
