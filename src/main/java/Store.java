@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.naming.event.EventContext;
+import java.util.Vector;
 
 import net.intelie.challenges.Event;
 import net.intelie.challenges.EventIterator;
@@ -10,7 +6,9 @@ import net.intelie.challenges.EventStore;
 
 public class Store implements EventStore, EventIterator {
 
-    private ArrayList<Event> EventCollection = new ArrayList<Event>();
+    //Vectors are thread-safe as they're sincronized
+    //(https://docs.oracle.com/javase/8/docs/api/java/util/Vector.html)
+    private Vector<Event> EventCollection = new Vector<Event>();
 
     private Event currentEvent;
 
