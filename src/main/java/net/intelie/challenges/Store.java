@@ -36,7 +36,6 @@ public class Store implements EventStore, EventIterator {
             hasCurrent = true;
             return true;
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Chegou no final");
             hasCurrent = false;
             return false;
         }
